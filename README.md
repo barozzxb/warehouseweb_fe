@@ -1,12 +1,96 @@
-# React + Vite
+Warehouse Management Web Application
+Project Overview
+This is a web application for managing warehouse inventory, built as a project for the Software Design Patterns course. The application allows users to manage products, track stock levels, handle orders, and generate reports. It implements various design patterns to ensure maintainability and scalability.
+Team Members
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Xuân Bảo - Project Lead, Frontend Developer (ReactJS, Ant Design)
+Thành Đạt - UI/UX Designer, Frontend Developer (TailwindCSS)
+Minh Văn - Documentation, Testing, Component Development
+Công Chiến - Documentation, Testing, Component Development
 
-Currently, two official plugins are available:
+Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Frontend: ReactJS, TailwindCSS, Ant Design
+Build Tool: Vite
+Version Control: Git, GitHub
+Design Patterns: ....updating.....
 
-## Expanding the ESLint configuration
+Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Inventory Management: Add, update, delete, and view products.
+Order Tracking: Create and manage orders, track status.
+Reports: Generate stock and order reports.
+User Authentication: Login and role-based access.
+Responsive Design: Optimized for desktop and mobile.
+
+Project Structure
+warehouseweb_fe/
+├── public/                   # Static assets
+├── src/                      # Source code
+│   ├── assets/               # Images, fonts
+│   ├── components/           # Reusable components
+│   │   ├── ui/               # Button, Input, etc.
+│   │   ├── section/          # Section components
+│   ├── pages/                # Page components (Home, Inventory, Orders)
+│   ├── hooks/                # Custom hooks
+│   ├── utils/                # Utility functions
+│   ├── App.jsx               # Main app component
+│   ├── index.css             # TailwindCSS styles
+│   ├── main.jsx              # Entry point
+├── vite.config.js            # Vite configuration
+├── package.json              # Dependencies and scripts
+├── README.md                 # Project documentation
+
+Design Patterns Implemented
+
+Singleton: Ensures a single instance of the API service.
+Factory: Creates different types of form components dynamically.
+Observer: Updates UI components when data changes (e.g., stock levels).
+MVC: Separates concerns between data (Model), UI (View), and logic (Controller).
+
+Prerequisites
+
+Node.js (>= 16.x)
+npm (>= 8.x)
+Git
+
+Installation and Setup
+
+Clone the repository:
+git clone https://github.com/barozzxb/warehouseweb_fe.git
+cd warehouseweb_fe
+
+
+Install dependencies:
+npm install
+
+
+Run the development server:
+npm run dev
+
+
+Open the application:
+
+Navigate to http://localhost:5173 in your browser.
+
+
+
+Usage
+
+Login: Use predefined credentials or register a new account.
+Manage Inventory: Add or update products via the Inventory page.
+Track Orders: Create and monitor orders on the Orders page.
+View Reports: Access stock and order reports from the Dashboard.
+
+Contributing
+
+Fork the repository.
+Create a new branch (git checkout -b feature-branch).
+Commit changes (git commit -m "Add feature").
+Push to the branch (git push origin feature-branch).
+Create a Pull Request.
+
+License
+This project is licensed under the MIT License.
+Contact
+For inquiries, contact the team lead at: dathiichan141@gmail.com.
