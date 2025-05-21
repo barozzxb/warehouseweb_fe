@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Warehouse, Users, BarChart3 } from "lucide-react";
 
+import warehouse from "../../assets/images/warehouse.webp";
+
 const HeroSection = () => {
   return (
     <div className="h-screen w-full flex flex-col md:flex-row items-center justify-center bg-gradient-to-br from-blue-700 to-purple-800 text-white px-6 md:px-16 py-10 relative overflow-hidden">
@@ -38,9 +40,9 @@ const HeroSection = () => {
       </div>
       <div className="hidden md:block z-10 ml-12">
         <img
-          src="https://cdn.dribbble.com/users/34354/screenshots/15584660/media/4847bb98c7f9a5c79863a1b9cddba991.png?compress=1&resize=1000x750&vertical=center"
+          src={warehouse}
           alt="Warehouse Illustration"
-          className="w-[500px] rounded-xl shadow-lg"
+          className="w-[800px] rounded-xl shadow-lg"
         />
       </div>
     </div>
