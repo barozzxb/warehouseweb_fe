@@ -1,14 +1,21 @@
 import { BellOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Dropdown, Menu } from 'antd';
+import {useNavigate} from 'react-router-dom';
+const Header = () => {
+  const navigate = useNavigate();
+  const userMenu = (
+    <Menu>
+      <Menu.Item key="profile">Profile</Menu.Item>
+      <Menu.Item key="logout" onClick={
+        () => {
+          localStorage.removeItem('userId')
+          localStorage.removeItem('userRole')
+          localStorage.removeItem('token')
+          navigate('/login')
+          }}>Logout</Menu.Item>
 
-const userMenu = (
-  <Menu>
-    <Menu.Item key="profile">Profile</Menu.Item>
-    <Menu.Item key="logout">Logout</Menu.Item>
-  </Menu>
-);
-
-function Header() {
+    </Menu>
+  );
   return (
     <div className="flex items-center justify-between h-16 px-8 bg-white border-b shadow-sm">
       <div className="text-2xl font-bold text-blue-700 tracking-tight">Warehouse Management</div>
