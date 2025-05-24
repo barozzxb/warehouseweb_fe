@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, DatePicker, Select, Space, Switch } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs'; // Nhập dayjs để xử lý giá trị từ DatePicker
+import { DownloadOutlined, CalendarOutlined, FileTextOutlined, CloudDownloadOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 
 const { Option } = Select;
 
@@ -90,67 +90,156 @@ const ExportFiles = () => {
     }
   };
 
+  const getFormatIcon = (formatType) => {
+    switch (formatType) {
+      case 'pdf':
+        return '📄';
+      case 'csv':
+        return '📊';
+      case 'excel':
+        return '📋';
+      default:
+        return '📁';
+    }
+  };
+
   return (
-    <div className="p-6 bg-gray-100 min-h-screen flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Xuất Báo Cáo</h2>
-        <Space direction="vertical" size="middle" className="w-full">
-          {/* Field chọn ngày bắt đầu */}
-          <DatePicker
-            showTime
-            format="YYYY-MM-DD HH:mm:ss"
-            value={startDate ? dayjs(startDate) : null} // Chuyển Date thành dayjs để hiển thị
-            onChange={(date) => {
-              const newDate = date ? date.toDate() : null; // Chuyển từ dayjs sang Date
-              console.log('Selected Start Date:', newDate);
-              setStartDate(newDate);
-            }}
-            className="w-full"
-            placeholder="Từ ngày"
-          />
-          {/* Field chọn ngày kết thúc */}
-          <DatePicker
-            showTime
-            format="YYYY-MM-DD HH:mm:ss"
-            value={endDate ? dayjs(endDate) : null} // Chuyển Date thành dayjs để hiển thị
-            onChange={(date) => {
-              const newDate = date ? date.toDate() : null; // Chuyển từ dayjs sang Date
-              console.log('Selected End Date:', newDate);
-              setEndDate(newDate);
-            }}
-            className="w-full"
-            placeholder="Đến ngày"
-          />
-          {/* Chọn định dạng file */}
-          <Select
-            value={format}
-            onChange={(value) => setFormat(value)}
-            className="w-full"
-            placeholder="Chọn định dạng file"
-          >
-            <Option value="pdf">PDF</Option>
-            <Option value="csv">CSV</Option>
-            <Option value="excel">XLSX</Option>
-          </Select>
-          {/* Tùy chọn saveToFileSystem */}
-          <div className="flex items-center justify-between">
-            <span className="text-gray-700">Lưu file vào hệ thống:</span>
-            <Switch
-              checked={saveToFileSystem}
-              onChange={(checked) => setSaveToFileSystem(checked)}
-              checkedChildren="Bật"
-              unCheckedChildren="Tắt"
-            />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6 flex justify-center items-center">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-indigo-200/20 to-pink-200/20 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-white/20 w-full max-w-lg">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-4 shadow-lg">
+            <CloudDownloadOutlined className="text-2xl text-white" />
           </div>
-          {/* Nút Tải Xuống */}
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            Xuất Báo Cáo
+          </h2>
+          <p className="text-gray-500 text-sm">Tạo và tải xuống báo cáo giao dịch</p>
+        </div>
+
+        <Space direction="vertical" size="large" className="w-full">
+          {/* Date Range Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-3">
+              <CalendarOutlined className="text-blue-500" />
+              <span className="font-semibold text-gray-700">Khoảng thời gian</span>
+            </div>
+            
+            {/* Start Date */}
+            <div className="relative group">
+              <label className="block text-sm font-medium text-gray-600 mb-2">Từ ngày</label>
+              <DatePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                value={startDate ? dayjs(startDate) : null}
+                onChange={(date) => {
+                  const newDate = date ? date.toDate() : null;
+                  console.log('Selected Start Date:', newDate);
+                  setStartDate(newDate);
+                }}
+                className="w-full h-12 rounded-lg border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-all duration-200 shadow-sm hover:shadow-md"
+                placeholder="Chọn ngày bắt đầu"
+              />
+            </div>
+
+            {/* End Date */}
+            <div className="relative group">
+              <label className="block text-sm font-medium text-gray-600 mb-2">Đến ngày</label>
+              <DatePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                value={endDate ? dayjs(endDate) : null}
+                onChange={(date) => {
+                  const newDate = date ? date.toDate() : null;
+                  console.log('Selected End Date:', newDate);
+                  setEndDate(newDate);
+                }}
+                className="w-full h-12 rounded-lg border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-all duration-200 shadow-sm hover:shadow-md"
+                placeholder="Chọn ngày kết thúc"
+              />
+            </div>
+          </div>
+
+          {/* Format Selection */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <FileTextOutlined className="text-purple-500" />
+              <span className="font-semibold text-gray-700">Định dạng file</span>
+            </div>
+            <Select
+              value={format}
+              onChange={(value) => setFormat(value)}
+              className="w-full"
+              placeholder="Chọn định dạng file"
+              size="large"
+            >
+              <Option value="pdf">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">📄</span>
+                  <span>PDF Document</span>
+                </div>
+              </Option>
+              <Option value="csv">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">📊</span>
+                  <span>CSV Spreadsheet</span>
+                </div>
+              </Option>
+              <Option value="excel">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">📋</span>
+                  <span>Excel Workbook</span>
+                </div>
+              </Option>
+            </Select>
+          </div>
+
+          {/* Save to FileSystem Toggle */}
+          <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 rounded-xl border border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">💾</span>
+                <div>
+                  <span className="font-medium text-gray-700">Lưu file vào hệ thống</span>
+                  <p className="text-xs text-gray-500 mt-1">Tự động lưu bản sao vào server</p>
+                </div>
+              </div>
+              <Switch
+                checked={saveToFileSystem}
+                onChange={(checked) => setSaveToFileSystem(checked)}
+                checkedChildren="Bật"
+                unCheckedChildren="Tắt"
+                className="bg-gray-300"
+              />
+            </div>
+          </div>
+
+          {/* Export Button */}
           <Button
             type="primary"
             icon={<DownloadOutlined />}
             onClick={handleExport}
-            className="w-full bg-blue-600 hover:bg-blue-700"
+            size="large"
+            className="w-full h-14 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200"
           >
-            Tải Xuống
+            <span className="flex items-center justify-center gap-2">
+              <span className="text-lg">{getFormatIcon(format)}</span>
+              Tải Xuống Báo Cáo
+            </span>
           </Button>
+
+          {/* Info footer */}
+          <div className="text-center pt-4 border-t border-gray-100">
+            <p className="text-xs text-gray-400">
+              Báo cáo sẽ được tạo theo khoảng thời gian đã chọn
+            </p>
+          </div>
         </Space>
       </div>
     </div>

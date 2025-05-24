@@ -15,6 +15,7 @@ import { useState, useEffect } from 'react';
 import ManageStaff from './pages/ManageStaff';
 import UpdateProduct from './pages/UpdateProduct';
 import ExportFiles from './pages/ExportFiles';
+import SuppliersManagement from './pages/SuppliersManagement';
 const { Content } = Layout;
 
 // Placeholder components for new routes
@@ -160,7 +161,7 @@ function App() {
                       path="/manage-suppliers"
                       element={
                         <ProtectedRoute roleRequired="MANAGER">
-                          <ManageSuppliers />
+                          <SuppliersManagement />
                         </ProtectedRoute>
                       }
                     />

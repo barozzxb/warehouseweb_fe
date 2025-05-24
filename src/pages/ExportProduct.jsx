@@ -126,98 +126,263 @@ function ExportProduct() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
-      <div className="max-w-2xl mx-auto">
-        <Card
-          title="Export Product"
-          className="border-0 shadow-lg rounded-xl bg-white/80 backdrop-blur-sm"
-        >
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-            className="space-y-4"
-          >
-            <Form.Item
-              name="productId"
-              label="Product"
-              rules={[{ required: true, message: 'Please select a product!' }]}
-            >
-              <Select placeholder="Select product" loading={!products.length}>
-                {products.map((product) => (
-                  <Option key={product.id} value={product.id}>
-                    {product.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              name="quantity"
-              label="Quantity"
-              rules={[
-                { required: true, message: 'Please input quantity!' },
-                {
-                  validator: (_, value) => {
-                    const selectedProduct = products.find(
-                      (p) => p.id === form.getFieldValue('productId')
-                    );
-                    if (selectedProduct && value > selectedProduct.quantity) {
-                      return Promise.reject(
-                        `Quantity cannot exceed available stock (${selectedProduct.quantity})!`
-                      );
-                    }
-                    return Promise.resolve();
-                  },
-                },
-              ]}
-            >
-              <InputNumber min={1} className="w-full" />
-            </Form.Item>
-
-            <Form.Item
-              name="destination"
-              label="Destination"
-              rules={[{ required: true, message: 'Please input destination!' }]}
-            >
-              <Input placeholder="Enter destination" />
-            </Form.Item>
-
-            <Form.Item
-              name="reason"
-              label="Export Reason"
-              rules={[{ required: true, message: 'Please select a reason!' }]}
-            >
-              <Select placeholder="Select reason">
-                <Option value="sale">Sale</Option>
-                <Option value="transfer">Transfer</Option>
-                <Option value="return">Return</Option>
-                <Option value="other">Other</Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item name="notes" label="Notes">
-              <Input.TextArea rows={4} placeholder="Enter any additional notes" />
-            </Form.Item>
-
-            <Form.Item className="mb-0">
-              <div className="flex justify-end space-x-4">
-                <Button onClick={() => navigate('/')} disabled={loading}>
-                  Cancel
-                </Button>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  loading={loading}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 border-0 hover:from-blue-600 hover:to-purple-700"
-                >
-                  Export Product
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
-        </Card>
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-indigo-950 via-purple-900 to-pink-900">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
+
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+
+      <div className="relative z-10 p-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Header Section */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-6 shadow-2xl">
+              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+            </div>
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-4">
+              Export Product
+            </h1>
+            <p className="text-xl text-blue-200/80 max-w-2xl mx-auto leading-relaxed">
+              Generate professional export documentation with advanced PDF formatting and comprehensive product details
+            </p>
+          </div>
+
+          {/* Main Form Card */}
+          <Card
+            className="border-0 shadow-2xl bg-white/10 backdrop-blur-xl rounded-3xl overflow-hidden"
+            bodyStyle={{ padding: 0 }}
+          >
+            {/* Card Header */}
+            <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-b border-white/10 p-8">
+              <h2 className="text-2xl font-semibold text-white mb-2">Product Export Details</h2>
+              <p className="text-blue-200/70">Fill in the information below to generate your export document</p>
+            </div>
+
+            {/* Form Content */}
+            <div className="p-8">
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onFinish}
+                className="space-y-8"
+              >
+                {/* Form Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Product Selection */}
+                  <div className="lg:col-span-2">
+                    <Form.Item
+                      name="productId"
+                      label={<span className="text-white font-medium text-lg">Product Selection</span>}
+                      rules={[{ required: true, message: 'Please select a product!' }]}
+                    >
+                      <Select 
+                        placeholder="Choose your product" 
+                        loading={!products.length}
+                        size="large"
+                        className="custom-select"
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.1)',
+                          borderRadius: '12px',
+                        }}
+                      >
+                        {products.map((product) => (
+                          <Option key={product.id} value={product.id}>
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium">{product.name}</span>
+                              <span className="text-gray-500 text-sm">Stock: {product.quantity}</span>
+                            </div>
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  </div>
+
+                  {/* Quantity */}
+                  <Form.Item
+                    name="quantity"
+                    label={<span className="text-white font-medium text-lg">Export Quantity</span>}
+                    rules={[
+                      { required: true, message: 'Please input quantity!' },
+                      {
+                        validator: (_, value) => {
+                          const selectedProduct = products.find(
+                            (p) => p.id === form.getFieldValue('productId')
+                          );
+                          if (selectedProduct && value > selectedProduct.quantity) {
+                            return Promise.reject(
+                              `Quantity cannot exceed available stock (${selectedProduct.quantity})!`
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                  >
+                    <InputNumber 
+                      min={1} 
+                      className="w-full custom-input" 
+                      size="large"
+                      placeholder="Enter quantity"
+                    />
+                  </Form.Item>
+
+                  {/* Destination */}
+                  <Form.Item
+                    name="destination"
+                    label={<span className="text-white font-medium text-lg">Destination</span>}
+                    rules={[{ required: true, message: 'Please input destination!' }]}
+                  >
+                    <Input 
+                      placeholder="Enter destination address" 
+                      size="large"
+                      className="custom-input"
+                    />
+                  </Form.Item>
+
+                  {/* Export Reason */}
+                  <Form.Item
+                    name="reason"
+                    label={<span className="text-white font-medium text-lg">Export Reason</span>}
+                    rules={[{ required: true, message: 'Please select a reason!' }]}
+                  >
+                    <Select 
+                      placeholder="Select export reason" 
+                      size="large"
+                      className="custom-select"
+                    >
+                      <Option value="sale">🛒 Sale</Option>
+                      <Option value="transfer">🔄 Transfer</Option>
+                      <Option value="return">↩️ Return</Option>
+                      <Option value="other">📝 Other</Option>
+                    </Select>
+                  </Form.Item>
+
+                  {/* Notes */}
+                  <Form.Item 
+                    name="notes" 
+                    label={<span className="text-white font-medium text-lg">Additional Notes</span>}
+                    className="lg:col-span-2"
+                  >
+                    <Input.TextArea 
+                      rows={4} 
+                      placeholder="Enter any additional notes or special instructions..." 
+                      className="custom-textarea"
+                    />
+                  </Form.Item>
+                </div>
+
+                {/* Action Buttons */}
+                <Form.Item className="mb-0 pt-8">
+                  <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    <Button 
+                      onClick={() => navigate('/')} 
+                      disabled={loading}
+                      size="large"
+                      className="w-full sm:w-auto px-8 py-3 h-auto bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30 rounded-xl font-medium transition-all duration-300"
+                    >
+                      ← Back to Dashboard
+                    </Button>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      loading={loading}
+                      size="large"
+                      className="w-full sm:w-auto px-12 py-3 h-auto bg-gradient-to-r from-blue-500 to-purple-600 border-0 hover:from-blue-600 hover:to-purple-700 rounded-xl font-medium shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                    >
+                      {loading ? 'Generating PDF...' : '🚀 Generate Export PDF'}
+                    </Button>
+                  </div>
+                </Form.Item>
+              </Form>
+            </div>
+          </Card>
+
+          {/* Feature Highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-white font-semibold mb-2">Professional PDF</h3>
+              <p className="text-blue-200/70 text-sm">Generate comprehensive export documents with detailed tables and formatting</p>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-white font-semibold mb-2">Real-time Validation</h3>
+              <p className="text-blue-200/70 text-sm">Smart validation ensures export quantities don't exceed available stock</p>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+              <div className="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <h3 className="text-white font-semibold mb-2">Secure Processing</h3>
+              <p className="text-blue-200/70 text-sm">All data is processed securely with comprehensive error handling</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .custom-input .ant-input,
+        .custom-textarea .ant-input {
+          background: rgba(255, 255, 255, 0.1) !important;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          color: white !important;
+          border-radius: 12px !important;
+        }
+        
+        .custom-input .ant-input::placeholder,
+        .custom-textarea .ant-input::placeholder {
+          color: rgba(255, 255, 255, 0.5) !important;
+        }
+        
+        .custom-input .ant-input:hover,
+        .custom-textarea .ant-input:hover {
+          border-color: rgba(147, 197, 253, 0.5) !important;
+        }
+        
+        .custom-input .ant-input:focus,
+        .custom-textarea .ant-input:focus {
+          border-color: #3b82f6 !important;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+        }
+        
+        .custom-select .ant-select-selector {
+          background: rgba(255, 255, 255, 0.1) !important;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          border-radius: 12px !important;
+        }
+        
+        .custom-select .ant-select-selection-placeholder {
+          color: rgba(255, 255, 255, 0.5) !important;
+        }
+        
+        .custom-select:hover .ant-select-selector {
+          border-color: rgba(147, 197, 253, 0.5) !important;
+        }
+        
+        .custom-select.ant-select-focused .ant-select-selector {
+          border-color: #3b82f6 !important;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+        }
+      `}</style>
     </div>
   );
 }
