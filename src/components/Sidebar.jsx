@@ -61,6 +61,11 @@ function Sidebar() {
                   label: <Link to="/export">Export Product</Link>,
                 },
                 {
+                  key: '/export-file',
+                  icon: <ExportOutlined />,
+                  label: <Link to="/export-file">Export Files</Link>,
+                },
+                {
                   key: '/send-email',
                   icon: <MailOutlined />, // Thêm icon email
                   label: <Link to="/send-email">Send Email to Admin</Link>,

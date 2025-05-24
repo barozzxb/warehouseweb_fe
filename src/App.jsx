@@ -14,6 +14,7 @@ import SendEmailToAdmin from './pages/SendEmailToAdmin';
 import { useState, useEffect } from 'react';
 import ManageStaff from './pages/ManageStaff';
 import UpdateProduct from './pages/UpdateProduct';
+import ExportFiles from './pages/ExportFiles';
 const { Content } = Layout;
 
 // Placeholder components for new routes
@@ -126,6 +127,14 @@ function App() {
                       element={
                         <ProtectedRoute roleRequired="STAFF">
                           <ExportProduct />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/export-file"
+                      element={
+                        <ProtectedRoute roleRequired="STAFF">
+                          <ExportFiles />
                         </ProtectedRoute>
                       }
                     />
